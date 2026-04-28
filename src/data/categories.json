@@ -1,0 +1,6 @@
+[
+  { "id": 1, "name": "居家清潔", "description": "專業打掃、地毯清洗" },
+  { "id": 2, "name": "人力派遣", "description": "照護服務、臨時人力" },
+  { "id": 3, "name": "寵物陪伴", "description": "寵物照顧、散步陪伴" },
+  { "id": 4, "name": "專業工匠", "description": "水電維修、油漆工程" }
+]

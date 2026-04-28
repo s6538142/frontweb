@@ -1,0 +1,25 @@
+[
+  {
+    "id": 101,
+    "categoryId": 1,
+    "name": "小林清潔公司",
+    "rating": 4.7,
+    "priceRange": "$500 - $1500",
+    "skills": ["居家打掃", "地毯清洗"],
+    "contact": {
+      "phone": "0912-345-678",
+      "email": "cleaning@kobayashi.com"
+    },
+    "serviceArea": ["新北市", "台北市"],   
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!...",
+    "images": [
+      "/images/cleaning1.jpg",
+      "/images/cleaning2.jpg",
+      "/images/cleaning3.jpg"
+    ],
+    "reviews": [
+      { "user": "王小姐", "comment": "非常細心，值得推薦！", "stars": 5 },
+      { "user": "陳先生", "comment": "速度快，服務好。", "stars": 4 }
+    ]
+  }
+]
