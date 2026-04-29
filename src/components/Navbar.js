@@ -84,7 +84,7 @@ function AppNavbar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/">首頁</Nav.Link>
-          <Nav.Link as={Link} to="/category/1">服務分類</Nav.Link>
+          
         </Nav>
 
         {user && (

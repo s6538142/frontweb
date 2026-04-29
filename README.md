@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+# 多元需求平台
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+這是一個以 React + Bootstrap 建構的多元需求平台，提供使用者依照地址與分類篩選服務店家，並完成預約流程。
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 功能整理
 
-### `npm start`
+### 1. 使用者帳號與會員資料
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 註冊 / 登入 / 登出
+- 會員資料管理（姓名、電話）
+- 常用地址管理（新增、刪除、選擇目前地址）
+- Google Places API 自動完成地址輸入
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2. 地址管理
 
-### `npm test`
+- Navbar 中可快速輸入或選擇常用地址
+- Modal 管理地址清單（新增 / 刪除 / 選擇）
+- 刪除地址時有確認提示
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 3. 服務分類與店家顯示
 
-### `npm run build`
+- 首頁顯示分類卡片（居家清潔、水電維修、寵物照顧、油漆工程…）
+- 點擊分類卡片 → 導向 `/category/:categoryId`
+- Category 頁面：
+  - 依分類 ID 過濾店家
+  - 依使用者目前地址過濾服務範圍
+  - 顯示店家卡片（名稱、技能、價格範圍、服務範圍）
+  - 提供「預約服務」按鈕 → 導向 Booking 頁面
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 4. 店家詳細頁面
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Provider 頁面顯示單一店家詳細資訊
+- 包含店家圖片、評價、聯絡方式
+- 提供「預約服務」按鈕 → 導向 Booking 頁面
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 5. 預約流程
 
-### `npm run eject`
+- Booking 頁面：選擇日期、時間，提交預約
+- BookingSuccess 頁面：顯示預約成功訊息
+- MyBookings 頁面：顯示使用者所有預約紀錄（從 localStorage 讀取）
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 使用步驟
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **註冊 / 登入**
+   - 使用者建立帳號並登入平台。
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **設定常用地址**
+   - 在 Profile 頁面或 Navbar 輸入地址。
+   - 選擇一個地址作為 `currentAddress`。
 
-## Learn More
+3. **選擇服務分類**
+   - 在首頁點擊分類卡片 → 進入 `/category/:categoryId`。
+   - 系統會依照分類與地址顯示符合的店家。
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **瀏覽店家**
+   - 在 Category 或 Provider 頁面查看店家資訊。
+   - 點擊「預約服務」進入 Booking 頁面。
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. **完成預約**
+   - 在 Booking 頁面選擇日期與時間。
+   - 提交後顯示 BookingSuccess。
+   - 預約紀錄會存入 localStorage。
 
-### Code Splitting
+6. **查看我的預約**
+   - 在 Navbar 點擊「我的預約」。
+   - 顯示所有已完成的預約紀錄。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 技術架構
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- React 19
+- React Router
+- React Bootstrap
+- Google Maps Places API
+- LocalStorage 作為使用者資料與預約紀錄的暫存
 
-### Making a Progressive Web App
+## 專案下載與運行
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 1. 下載專案
 
-### Advanced Configuration
+```bash
+git clone https://github.com/你的帳號/你的專案.git
+cd 你的專案
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 2. 安裝依賴
 
-### Deployment
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 3. 設定環境變數
 
-### `npm run build` fails to minify
+```bash
+REACT_APP_GOOGLE_MAPS_API_KEY=你的API_KEY
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 4. 啟動開發伺服器
+
+```bash
+REACT_APP_GOOGLE_MAPS_API_KEY=你的API_KEY
+```
+
+### 5. 瀏覽專案
+
+```bash
+http://localhost:3000
+```
