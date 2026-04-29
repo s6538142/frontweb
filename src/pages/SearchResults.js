@@ -1,8 +1,9 @@
 // src/pages/SearchResults.js
 import React, { useContext } from "react";
 import { Container, Card } from "react-bootstrap";
-import providers from "../data/providers.json"; // 假設這裡存放店家資料
+import providers from "../data/providers.json"; 
 import { AuthContext } from "../context/AuthContext";
+import { filterProvidersByAddress } from "../utils/filterProvidersByAddress"; // 匯入共用函式
 
 function SearchResults() {
   const { user } = useContext(AuthContext);
@@ -13,10 +14,8 @@ function SearchResults() {
     p.name.includes(keyword)
   );
 
-  // 依據目前地址過濾
-  const filteredProviders = user?.currentAddress
-    ? matchedProviders.filter((p) => p.serviceArea.includes(user.currentAddress))
-    : matchedProviders;
+  // 使用共用 Utility 依據目前地址過濾
+  const filteredProviders = filterProvidersByAddress(matchedProviders, user?.currentAddress);
 
   return (
     <Container className="mt-4">

@@ -3,11 +3,12 @@ import React, { useContext } from "react";
 import { Container, Card } from "react-bootstrap";
 import providers from "../data/providers.json";
 import { AuthContext } from "../context/AuthContext";
+import { filterProvidersByAddress } from "../utils/filterProvidersByAddress"; // 匯入共用函式
 
 function NearbyProviders() {
   const { user } = useContext(AuthContext);
 
-  if (!user || !user.address) {
+  if (!user || !user.currentAddress) {
     return (
       <Container className="mt-4">
         <h2>附近店家</h2>
@@ -16,9 +17,8 @@ function NearbyProviders() {
     );
   }
 
-  const nearbyProviders = providers.filter((p) =>
-    p.serviceArea.includes(user.address)
-  );
+  // 使用共用 Utility 來篩選符合目前地址的店家
+  const nearbyProviders = filterProvidersByAddress(providers, user.currentAddress);
 
   return (
     <Container className="mt-4">

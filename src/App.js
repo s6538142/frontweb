@@ -35,7 +35,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/category/:id" element={<Category />} />
+            {/* ✅ 修正這裡，把 :id 改成 :categoryId */}
+            <Route path="/category/:categoryId" element={<Category />} />
             <Route path="/provider/:id" element={<Provider />} />
             <Route path="/booking/:id" element={<Booking />} />
             <Route path="/booking-success" element={<BookingSuccess />} />

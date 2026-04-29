@@ -10,16 +10,69 @@
       "phone": "0912-345-678",
       "email": "cleaning@kobayashi.com"
     },
-    "serviceArea": ["新北市", "台北市"],   
+    "serviceArea": ["新北市新莊區", "台北市大安區"],
     "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!...",
-    "images": [
-      "/images/cleaning1.jpg",
-      "/images/cleaning2.jpg",
-      "/images/cleaning3.jpg"
-    ],
+    "images": ["/images/cleaning1.jpg", "/images/cleaning2.jpg", "/images/cleaning3.jpg"],
     "reviews": [
       { "user": "王小姐", "comment": "非常細心，值得推薦！", "stars": 5 },
       { "user": "陳先生", "comment": "速度快，服務好。", "stars": 4 }
+    ]
+  },
+  {
+    "id": 102,
+    "categoryId": 2,
+    "name": "阿強水電行",
+    "rating": 4.5,
+    "priceRange": "$800 - $2000",
+    "skills": ["水管維修", "電路檢修"],
+    "contact": {
+      "phone": "0922-111-222",
+      "email": "service@aqiang.com"
+    },
+    "serviceArea": ["新北市板橋區", "台北市信義區"],
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!...",
+    "images": ["/images/plumber1.jpg", "/images/plumber2.jpg"],
+    "reviews": [
+      { "user": "林先生", "comment": "修得很快，專業！", "stars": 5 },
+      { "user": "張小姐", "comment": "價格合理，態度好。", "stars": 4 }
+    ]
+  },
+  {
+    "id": 103,
+    "categoryId": 3,
+    "name": "幸福寵物陪伴",
+    "rating": 4.8,
+    "priceRange": "$300 - $1000",
+    "skills": ["寵物照顧", "遛狗服務"],
+    "contact": {
+      "phone": "0933-555-666",
+      "email": "petcare@happy.com"
+    },
+    "serviceArea": ["新北市三重區", "台北市中山區"],
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!...",
+    "images": ["/images/pet1.jpg", "/images/pet2.jpg"],
+    "reviews": [
+      { "user": "陳小姐", "comment": "狗狗很喜歡他們！", "stars": 5 },
+      { "user": "黃先生", "comment": "服務親切，值得推薦。", "stars": 4 }
+    ]
+  },
+  {
+    "id": 104,
+    "categoryId": 4,
+    "name": "大師油漆工程",
+    "rating": 4.6,
+    "priceRange": "$2000 - $5000",
+    "skills": ["室內油漆", "外牆翻新"],
+    "contact": {
+      "phone": "0955-777-888",
+      "email": "painting@master.com"
+    },
+    "serviceArea": ["台北市大安區", "新北市新莊區"],
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!...",
+    "images": ["/images/paint1.jpg", "/images/paint2.jpg"],
+    "reviews": [
+      { "user": "李小姐", "comment": "油漆很細緻，效果好。", "stars": 5 },
+      { "user": "周先生", "comment": "施工速度快，值得信賴。", "stars": 4 }
     ]
   }
 ]

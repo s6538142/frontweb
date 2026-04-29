@@ -1,16 +1,34 @@
 // src/pages/Category.js
 import React, { useContext } from "react";
-import { Container, Card } from "react-bootstrap";
+import { Container, Card, Button } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
 import providers from "../data/providers.json";
 import { AuthContext } from "../context/AuthContext";
+import { filterProvidersByAddress } from "../utils/filterProvidersByAddress";
 
 function Category() {
   const { user } = useContext(AuthContext);
+  const { categoryId } = useParams(); // 從路由取得分類 ID
+  const navigate = useNavigate();
 
-  // 篩選符合目前地址的店家
-  const filteredProviders = user?.currentAddress
-    ? providers.filter((p) => p.serviceArea.includes(user.currentAddress))
-    : providers; // 如果沒設定地址，顯示全部
+  // 先過濾分類
+  const matchedProviders = providers.filter(
+    (p) => p.categoryId === Number(categoryId)
+  );
+
+  // 再依據地址過濾
+  const filteredProviders = filterProvidersByAddress(matchedProviders, user?.currentAddress);
+
+  //debug
+
+  console.log("currentAddress:", user?.currentAddress);
+  console.log("matchedProviders:", matchedProviders);
+  console.log("filteredProviders:", filteredProviders);
+
+
+  const handleBooking = (providerId) => {
+    navigate(`/booking/${providerId}`);
+  };
 
   return (
     <Container className="mt-4">
@@ -23,6 +41,11 @@ function Category() {
             <Card.Body>
               <Card.Title>{provider.name}</Card.Title>
               <Card.Text>服務範圍：{provider.serviceArea.join(", ")}</Card.Text>
+              <Card.Text>技能：{provider.skills.join(", ")}</Card.Text>
+              <Card.Text>價格範圍：{provider.priceRange}</Card.Text>
+              <Button variant="primary" onClick={() => handleBooking(provider.id)}>
+                預約服務
+              </Button>
             </Card.Body>
           </Card>
         ))
