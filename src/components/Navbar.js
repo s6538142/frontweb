@@ -3,6 +3,8 @@ import React, { useContext, useState, useEffect, useRef, useCallback } from "rea
 import { Navbar, Nav, Form, InputGroup, Modal, Button, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import LoginModal from "./LoginModal";       // ✅ 新增
+import RegisterModal from "./RegisterModal"; // ✅ 新增
 
 function AppNavbar() {
   const { user, logout, login } = useContext(AuthContext);
@@ -10,6 +12,8 @@ function AppNavbar() {
   const [showModal, setShowModal] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [showLogin, setShowLogin] = useState(false);       // ✅ 控制登入 Modal
+  const [showRegister, setShowRegister] = useState(false); // ✅ 控制註冊 Modal
   const inputRef = useRef(null);
 
   const handleAddressChange = useCallback(
@@ -84,7 +88,6 @@ function AppNavbar() {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="me-auto">
           <Nav.Link as={Link} to="/">首頁</Nav.Link>
-          
         </Nav>
 
         {user && (
@@ -116,8 +119,9 @@ function AppNavbar() {
             </>
           ) : (
             <>
-              <Nav.Link as={Link} to="/login">登入</Nav.Link>
-              <Nav.Link as={Link} to="/register">註冊</Nav.Link>
+              {/* ✅ 改成呼叫 Modal */}
+              <Nav.Link onClick={() => setShowLogin(true)}>登入</Nav.Link>
+              <Nav.Link onClick={() => setShowRegister(true)}>註冊</Nav.Link>
             </>
           )}
         </Nav>
@@ -148,18 +152,15 @@ function AppNavbar() {
                   key={idx}
                   className="d-flex justify-content-between align-items-center"
                 >
-                  {/* 點擊地址 → 選擇並關閉 Modal */}
                   <span
                     onClick={() => {
                       handleAddressChange(addr);
-                      setShowModal(false); // ✅ 選擇後自動關閉
+                      setShowModal(false);
                     }}
                     style={{ cursor: "pointer" }}
                   >
                     {addr}
                   </span>
-
-                  {/* 垃圾桶刪除按鈕 */}
                   <i
                     className="bi bi-trash text-danger"
                     style={{ cursor: "pointer" }}
@@ -191,6 +192,10 @@ function AppNavbar() {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* ✅ 登入 / 註冊 Modal */}
+      <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
+      <RegisterModal show={showRegister} onHide={() => setShowRegister(false)} />
     </Navbar>
   );
 }

@@ -8,8 +8,7 @@ import Booking from "./pages/Booking";
 import SearchResults from "./pages/SearchResults";
 import BookingSuccess from "./pages/BookingSuccess";
 import MyBookings from "./pages/MyBookings";
-import Login from "./pages/Login"; 
-import Register from "./pages/Register";  
+
 import { AuthProvider } from "./context/AuthContext"; 
 import Profile from "./pages/Profile";      
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
@@ -49,8 +48,6 @@ function App() {
               }
             />
             <Route path="/category/search" element={<SearchResults />} />
-            <Route path="/login" element={<Login />} /> 
-            <Route path="/register" element={<Register />} /> 
             <Route path="/profile" element={<Profile />} /> 
           </Routes>
         </Router>
