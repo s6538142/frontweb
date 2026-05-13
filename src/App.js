@@ -27,7 +27,7 @@ function App() {
   return (
     <AuthProvider>
       <LoadScript
-        googleMapsApiKey="YOUR_API_KEY" // 🔑 換成你的 Google Maps API Key
+        googleMapsApiKey="AIzaSyBtXgF9eT33rVN3BGPQXjRy_kJhziG2tEU" // 🔑 換成你的 Google Maps API Key
         libraries={["places"]}
       >
         <Router>
