@@ -1,4 +1,3 @@
-// src/pages/Category.js
 import React, { useContext } from "react";
 import { Container, Card, Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,26 +7,20 @@ import { filterProvidersByAddress } from "../utils/filterProvidersByAddress";
 
 function Category() {
   const { user } = useContext(AuthContext);
-  const { categoryId } = useParams(); // 從路由取得分類 ID
+  const { categoryId } = useParams();
   const navigate = useNavigate();
 
-  // 先過濾分類
   const matchedProviders = providers.filter(
     (p) => p.categoryId === Number(categoryId)
   );
 
-  // 再依據地址過濾
-  const filteredProviders = filterProvidersByAddress(matchedProviders, user?.currentAddress);
+  const filteredProviders = filterProvidersByAddress(
+    matchedProviders,
+    user?.currentAddress
+  );
 
-  //debug
-
-  console.log("currentAddress:", user?.currentAddress);
-  console.log("matchedProviders:", matchedProviders);
-  console.log("filteredProviders:", filteredProviders);
-
-
-  const handleBooking = (providerId) => {
-    navigate(`/booking/${providerId}`);
+  const handleViewProvider = (providerId) => {
+    navigate(`/provider/${providerId}`);
   };
 
   return (
@@ -43,8 +36,11 @@ function Category() {
               <Card.Text>服務範圍：{provider.serviceArea.join(", ")}</Card.Text>
               <Card.Text>技能：{provider.skills.join(", ")}</Card.Text>
               <Card.Text>價格範圍：{provider.priceRange}</Card.Text>
-              <Button variant="primary" onClick={() => handleBooking(provider.id)}>
-                預約服務
+              <Button
+                variant="primary"
+                onClick={() => handleViewProvider(provider.id)}
+              >
+                查看詳情
               </Button>
             </Card.Body>
           </Card>

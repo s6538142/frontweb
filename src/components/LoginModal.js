@@ -1,50 +1,61 @@
-// src/components/LoginModal.js
 import React, { useState, useContext } from "react";
-import { Modal, Button, Form, Alert } from "react-bootstrap";
+import { Modal, Button, Form } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 
 function LoginModal({ show, onHide }) {
-  const [error, setError] = useState("");
   const { login } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const email = formData.get("email");
-    const password = formData.get("password");
-
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const user = users.find((u) => u.email === email && u.password === password);
-
-    if (user) {
-      login({ email }); // 使用 Context 更新狀態
-      setError("");
-      onHide(); // 登入成功後關閉 Modal
-    } else {
-      setError("帳號或密碼錯誤");
-    }
+    login({ email, password }); // 模擬登入
+    onHide(); // 登入成功後關閉 Modal
   };
 
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={onHide}>
       <Modal.Header closeButton>
-        <Modal.Title>會員登入</Modal.Title>
+        <Modal.Title>登入</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {error && <Alert variant="danger">{error}</Alert>}
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" name="email" required />
+            <Form.Control
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>密碼</Form.Label>
-            <Form.Control type="password" name="password" required />
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </Form.Group>
-          <Button type="submit" variant="primary" className="w-100">
+          <Button type="submit" variant="primary" className="w-100 mb-3">
             登入
           </Button>
         </Form>
+
+        {/* 📌 社群登入選項 */}
+        <div className="text-center">
+          <p>或使用社群帳號登入</p>
+          <Button variant="success" className="me-2 mb-2 w-100">
+            <i className="bi bi-chat-dots"></i> 使用 LINE 登入
+          </Button>
+          <Button variant="danger" className="me-2 mb-2 w-100">
+            <i className="bi bi-envelope-fill"></i> 使用 Gmail 登入
+          </Button>
+          <Button variant="primary" className="w-100">
+            <i className="bi bi-facebook"></i> 使用 Facebook 登入
+          </Button>
+        </div>
       </Modal.Body>
     </Modal>
   );

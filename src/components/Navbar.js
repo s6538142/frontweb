@@ -1,10 +1,10 @@
-// src/components/Navbar.js
 import React, { useContext, useState, useEffect, useRef, useCallback } from "react";
 import { Navbar, Nav, Form, InputGroup, Modal, Button, ListGroup } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import LoginModal from "./LoginModal";       // ✅ 新增
-import RegisterModal from "./RegisterModal"; // ✅ 新增
+import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
+import useGeoLocation from "../hooks/useGeoLocation"; // 📌 引用共用 Hook
 
 function AppNavbar() {
   const { user, logout, login } = useContext(AuthContext);
@@ -12,9 +12,13 @@ function AppNavbar() {
   const [showModal, setShowModal] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
-  const [showLogin, setShowLogin] = useState(false);       // ✅ 控制登入 Modal
-  const [showRegister, setShowRegister] = useState(false); // ✅ 控制註冊 Modal
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
   const inputRef = useRef(null);
+
+  // 📌 使用共用 Hook
+  const { detectedAddress, getLocation, loading } = useGeoLocation();
+  const [showLocationModal, setShowLocationModal] = useState(false);
 
   const handleAddressChange = useCallback(
     (addr) => {
@@ -81,6 +85,20 @@ function AppNavbar() {
     }
   };
 
+  // 📌 修正 includes 報錯問題
+  const handleConfirmDetectedAddress = () => {
+    const addresses = user?.addresses || []; // 確保是陣列
+    if (user && detectedAddress && !addresses.includes(detectedAddress)) {
+      const updatedUser = {
+        ...user,
+        addresses: [...addresses, detectedAddress],
+        currentAddress: detectedAddress
+      };
+      login(updatedUser);
+    }
+    setShowLocationModal(false);
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Navbar.Brand as={Link} to="/">多元需求平台</Navbar.Brand>
@@ -106,6 +124,9 @@ function AppNavbar() {
               >
                 <i className="bi bi-geo-alt-fill"></i>
               </InputGroup.Text>
+              <Button variant="info" onClick={() => { getLocation(); setShowLocationModal(true); }} className="ms-2">
+                {loading ? "定位中..." : "GPS定位"}
+              </Button>
             </InputGroup>
           </Form>
         )}
@@ -119,7 +140,6 @@ function AppNavbar() {
             </>
           ) : (
             <>
-              {/* ✅ 改成呼叫 Modal */}
               <Nav.Link onClick={() => setShowLogin(true)}>登入</Nav.Link>
               <Nav.Link onClick={() => setShowRegister(true)}>註冊</Nav.Link>
             </>
@@ -193,7 +213,25 @@ function AppNavbar() {
         </Modal.Footer>
       </Modal>
 
-      {/* ✅ 登入 / 註冊 Modal */}
+      {/* 📌 定位結果 Modal */}
+      <Modal show={showLocationModal} onHide={() => setShowLocationModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>定位結果</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{detectedAddress}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowLocationModal(false)}>
+            取消
+          </Button>
+          <Button variant="primary" onClick={handleConfirmDetectedAddress}>
+            確認並加入地址
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* 登入 / 註冊 Modal */}
       <LoginModal show={showLogin} onHide={() => setShowLogin(false)} />
       <RegisterModal show={showRegister} onHide={() => setShowRegister(false)} />
     </Navbar>
