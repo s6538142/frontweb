@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import providers from "../data/providers.json";
-import { Container, Form, Button } from "react-bootstrap";
+import { Container, Form, Button, Card } from "react-bootstrap";
 
 function Booking() {
   const { id } = useParams(); // providerId
@@ -13,12 +13,14 @@ function Booking() {
     const formData = new FormData(e.target);
 
     const bookingData = {
+      id: Date.now(), // 預約編號
       providerId: id,
       providerName: provider?.name,
       date: formData.get("date"),
       time: formData.get("time"),
+      address: formData.get("address"),
       description: formData.get("description"),
-      createdAt: new Date().toLocaleString() // 加上建立時間
+      createdAt: new Date().toLocaleString()
     };
 
     // 存到 localStorage
@@ -33,6 +35,17 @@ function Booking() {
   return (
     <Container className="mt-4">
       <h2>預約服務：{provider ? provider.name : "未知業者"}</h2>
+
+      {provider && (
+        <Card className="mb-3">
+          <Card.Body>
+            <Card.Text>技能：{provider.skills.join(", ")}</Card.Text>
+            <Card.Text>價格範圍：{provider.priceRange}</Card.Text>
+            <Card.Text>服務範圍：{provider.serviceArea.join(", ")}</Card.Text>
+          </Card.Body>
+        </Card>
+      )}
+
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
           <Form.Label>日期</Form.Label>
@@ -41,6 +54,10 @@ function Booking() {
         <Form.Group className="mb-3">
           <Form.Label>時間</Form.Label>
           <Form.Control type="time" name="time" required />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>服務地址</Form.Label>
+          <Form.Control type="text" name="address" placeholder="請輸入服務地址" required />
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>需求描述</Form.Label>

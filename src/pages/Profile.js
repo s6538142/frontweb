@@ -1,6 +1,5 @@
-// src/pages/Profile.js
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Form, Button, Alert, ListGroup } from "react-bootstrap";
+import { Container, Form, Button, Alert, ListGroup, Modal } from "react-bootstrap";
 import { AuthContext } from "../context/AuthContext";
 
 function Profile() {
@@ -11,6 +10,10 @@ function Profile() {
   const [newAddress, setNewAddress] = useState("");
   const [currentAddress, setCurrentAddress] = useState("");
   const [message, setMessage] = useState("");
+
+  // 📌 Modal 狀態
+  const [showModal, setShowModal] = useState(false);
+  const [detectedAddress, setDetectedAddress] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -40,7 +43,34 @@ function Profile() {
     const updatedAddresses = addresses.filter((a) => a !== addr);
     setAddresses(updatedAddresses);
     if (currentAddress === addr) {
-      setCurrentAddress(""); // 如果刪掉的是目前地址，清空
+      setCurrentAddress("");
+    }
+  };
+
+  // 📌 定位功能（只顯示結果在 Modal）
+  const handleGetLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        const apiKey = "AIzaSyBtXgF9eT33rVN3BGPQXjRy_kJhziG2tEU"; // ⚠️ 請替換成你的 API Key
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+        );
+        const data = await response.json();
+
+        if (data.results && data.results[0]) {
+          const addr = data.results[0].formatted_address;
+          setDetectedAddress(addr);
+          setShowModal(true); // 打開 Modal 顯示結果
+        } else {
+          setDetectedAddress("定位失敗，無法取得地址");
+          setShowModal(true);
+        }
+      });
+    } else {
+      setDetectedAddress("您的瀏覽器不支援定位功能");
+      setShowModal(true);
     }
   };
 
@@ -80,6 +110,9 @@ function Profile() {
             <Button variant="secondary" onClick={handleAddAddress} className="ms-2">
               新增
             </Button>
+            <Button variant="info" onClick={handleGetLocation} className="ms-2">
+              GPS定位
+            </Button>
           </div>
         </Form.Group>
 
@@ -103,6 +136,21 @@ function Profile() {
 
         <Button type="submit" variant="primary">更新資料</Button>
       </Form>
+
+      {/* 📌 Modal 顯示定位結果 */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>定位結果</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{detectedAddress}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            關閉
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 }

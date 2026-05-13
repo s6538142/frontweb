@@ -3,7 +3,6 @@ import React from "react";
 import { Container, Row, Col, Card, Form, Button, Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import categories from "../data/categories.json";
-import Footer from "../components/Footer";
 
 function Home() {
   return (
@@ -105,7 +104,6 @@ function Home() {
         </Col>
       </Row>
     </Container>
-    <Footer />
     </>
   );
 }
