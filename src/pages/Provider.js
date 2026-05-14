@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // ✅ 加上 useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import { Container, Card, Alert, Button } from "react-bootstrap";
 import providers from "../data/providers.json";
 import { AuthContext } from "../context/AuthContext";
@@ -9,7 +9,7 @@ function Provider() {
   const { id } = useParams();
   const provider = providers.find((p) => p.id === parseInt(id));
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate(); // ✅ 新增
+  const navigate = useNavigate();
 
   if (!provider) {
     return (

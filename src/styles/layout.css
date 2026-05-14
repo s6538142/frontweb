@@ -1,0 +1,18 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 讓整個頁面至少佔滿視窗高度 */
+}
+
+.main-content {
+  flex: 1; /* 主內容自動撐開 */
+}
+
+footer {
+  margin-top: auto; /* Footer 永遠在最下面 */
+}
