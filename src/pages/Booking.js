@@ -30,7 +30,8 @@ function Booking() {
       time: formData.get("time"),
       address: address || formData.get("address"), // 📌 優先使用定位或選取的地址
       description: formData.get("description"),
-      createdAt: new Date().toLocaleString()
+      createdAt: new Date().toLocaleString(),
+      status: "active" // ✅ 新增狀態欄位
     };
 
     // 存到 localStorage

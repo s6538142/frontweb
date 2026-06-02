@@ -38,6 +38,18 @@ function BookingSuccess() {
         </Card.Body>
       </Card>
 
+      {/* 取消預約注意事項 */}
+      <Alert variant="warning" className="mt-3 text-start">
+        ⚠️ 取消預約須知：
+        <ul className="mt-2 mb-0">
+          <li>您可在「我的預約」頁面取消預約。</li>
+          <li>服務開始前 24 小時內不可直接取消，需聯絡客服或店家。</li>
+          <li>客服電話：02-1234-5678</li>
+          <li>客服 Email：support@yourplatform.com</li>
+        </ul>
+      </Alert>
+
+
       {/* 返回按鈕 */}
       <div className="mt-3">
         <Button as={Link} to="/" variant="secondary" className="me-2">
